@@ -12,7 +12,13 @@
         <result property="sort" column="sort"/>
         <result property="createTime" column="create_time"/>
     </resultMap>
-
+    <insert id="authRole" parameterType="org.example.authrole.dto.AuthRoleDTO">
+        INSERT INTO role_permission (role_id,permission_id)
+        VALUES
+        <foreach collection="permissionIds" item="permissionId" separator=",">
+            (#{roleId},#{permissionId})
+        </foreach>
+    </insert>
 
 
 </mapper>

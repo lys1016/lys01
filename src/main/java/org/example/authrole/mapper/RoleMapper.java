@@ -8,5 +8,5 @@ import org.example.authrole.entity.Role;
 
 @Mapper
 public interface RoleMapper extends BaseMapper<Role> {
-
+    void authRole(AuthRoleDTO authRoleDTO);
 }

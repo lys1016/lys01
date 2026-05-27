@@ -19,7 +19,10 @@ public class AuthController {
     private RoleMapper roleMapper;
 
     @PostMapping("/authRole")
-        public String authRole(AuthRoleDTO authRoleDto){
+        public String authRole(@RequestBody AuthRoleDTO authRoleDto){
+        log.info("角色ID{}",authRoleDto.getRoleId());
+        log.info("权限ID{}",authRoleDto.getPermissionIds());
+        roleMapper.authRole(authRoleDto);
             return "";
         }
 
