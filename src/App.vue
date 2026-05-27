@@ -8,6 +8,8 @@ const isHide = ref(true);
 const roleList = ref<Role[]>([]);
 
 onMounted(async () => {
+  roleList.value = await getRoleList();
+  console.log("角色数据：",roleList.value)
 
 })
 
