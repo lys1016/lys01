@@ -26,7 +26,10 @@ public class AuthController {
             return "";
         }
 
-
+    @GetMapping("/getRoleList")
+    public List<Role>getRoleList(){
+        return roleMapper.selectList(null);
+    }
 
 
 }
