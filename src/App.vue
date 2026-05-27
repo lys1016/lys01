@@ -18,7 +18,6 @@ const openAuthDialog = async () => {
 }
 const closeAuthDialog = () => {
   isHide.value = true;
-
 }
 </script>
 
