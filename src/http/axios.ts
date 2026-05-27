@@ -4,7 +4,6 @@ const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
     timeout: 50000, // 1000ms 有点短，容易超时
 });
-
 //
 // 请求拦截器
 instance.interceptors.request.use((config) => {

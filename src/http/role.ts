@@ -10,7 +10,6 @@ export interface Role {
     name: string
 }
 //
-
 export const authorizeRole = (data: RoleAuthorizePayload) => {
     return axios({
         url: '/api/role/authRole',
