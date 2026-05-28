@@ -19,4 +19,16 @@ export const authorizeRole = (data: RoleAuthorizePayload) => {
     })
 }
 
+export const getRoleList = () => {
+    return axios({
+        url: '/api/role/getRoleList',
+        method: 'GET',
+    })
+}
+export const getAllPermission = () => {
+    return axios({
+        url: '/api/role/getAllPermission',
+        method: 'GET',
+    })
+}
 

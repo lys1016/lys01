@@ -1,19 +1,27 @@
 <script setup lang="ts">
 
 import {onMounted, ref} from "vue";
-import {getRoleList, type Role} from "@/http/role.ts";
+import {getAllPermission, getRoleList, type Role} from "@/http/role.ts";
 
 const isHide = ref(true);
 
 const roleList = ref<Role[]>([]);
 
-onMounted(async () => {
+const allPermission = ref([])
 
+onMounted(async () => {
+  roleList.value = await getRoleList()
+  console.log("角色数据：",roleList.value)
 })
 
 // 打开遮罩层
 const openAuthDialog = async () => {
   isHide.value = false;
+  allPermission.value =  await getAllPermission();
+  console.log("权限是：",allPermission.value)
+  allPermission.value.forEach(item =>{
+    item.checked = false
+  })
 
 }
 const closeAuthDialog = () => {
