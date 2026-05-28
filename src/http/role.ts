@@ -31,6 +31,7 @@ export const getAllPermission = () => {
         url: '/api/role/getAllPermission',
         method: 'GET',
     })
+
 }
 
 
