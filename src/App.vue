@@ -2,12 +2,20 @@
 
 import {onMounted, ref} from "vue";
 import {getAllPermission, getRoleList, type Role} from "@/http/role.ts";
+import Mymenu from "@/Mymenu.vue";
+
+interface permission{
+  id:number,
+  name:string,
+  menuType:string,
+  checked:boolean
+}
 
 const isHide = ref(true);
 
 const roleList = ref<Role[]>([]);
 
-const allPermission = ref([])
+const allPermission = ref<permission[]>([])
 
 onMounted(async () => {
   roleList.value = await getRoleList()
@@ -50,6 +58,11 @@ const closeAuthDialog = () => {
       <span class="rbac-modal-close" id="closeModal" @click="closeAuthDialog">&times;</span>
       <div style="padding: 20px; height: 100%; box-sizing: border-box;">
         <h2>角色授权</h2>
+        <Mymenu
+        v-for="menu in allPermission"
+        :key="menu.id"
+        :item="menu"
+        ></Mymenu>
       </div>
     </div>
   </div>
