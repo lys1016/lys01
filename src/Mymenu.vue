@@ -1,24 +1,35 @@
 <script setup lang="ts">
-defineProps({
+import {computed} from "vue";
+
+const prop = defineProps({
   item: {
     type:Object,
     required: true
   }
 })
 
+const typeName2chinese = computed(()=>{
+  switch (prop.item.menuType){
+    case 'DIRECTORY' : return '目录'
+    case 'MENU': return '菜单'
+    case 'BUTTON':return'按钮'
+  }
+})
+
+
+
 
 </script>
 
 <template>
   <div>
-    <input type="checkbox" :checked = false>
+    <input type="checkbox" :checked = item.checked>
     <span>{{item.name}}</span>
-    <div class="children" v-if="item.children && item.children.length>0"
-    v-for="subitem in item.children"
-         :key="subitem.id"
-
-    >
-      <Mymenu :item="subitem"></Mymenu>
+    <span class="menuType">{{typeName2chinese}}</span>
+    <div class="children" v-if="item.children && item.children.length>0">
+      <Mymenu v-for="subitem in item.children"
+              :key="subitem.id"
+              :item="subitem"></Mymenu>
     </div>
   </div>
 
@@ -27,5 +38,8 @@ defineProps({
 <style scoped>
   .children{
     padding-left: 20px;
+  }
+  .menuType{
+    float: right;
   }
 </style>

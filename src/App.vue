@@ -27,11 +27,20 @@ const openAuthDialog = async () => {
   isHide.value = false;
   allPermission.value =  await getAllPermission();
   console.log("权限是：",allPermission.value)
-  allPermission.value.forEach(item =>{
-    item.checked = false
-  })
-
+  addChecked(allPermission.value);
 }
+const addChecked =(treeData)=>{
+  treeData.forEach(p=>{
+    p.checked = false;
+    if(p.children && p.children.length>0){
+      addChecked(p.children)
+    }
+  })
+}
+
+
+
+
 const closeAuthDialog = () => {
   isHide.value = true;
 }
