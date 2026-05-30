@@ -1,21 +1,51 @@
 <script setup lang="ts">
 
 import {onMounted, ref} from "vue";
-import {getRoleList, type Role} from "@/http/role.ts";
+import {getAllPermission, getPermissionOfrole, getRoleList, type Role} from "@/http/role.ts";
+import Mymenu from "@/Mymenu.vue";
+
+interface Permission{
+  id:number,
+  name:string,
+  checked:boolean,
+  children:[],
+}
 
 const isHide = ref(true);
 
 const roleList = ref<Role[]>([]);
 
-onMounted(async () => {
 
+
+const allPermission = ref<Permission>([])
+
+onMounted(async () => {
+  roleList.value = await getRoleList()
+  console.log("角色数据是：{}",roleList.value)
 })
 
 // 打开遮罩层
-const openAuthDialog = async () => {
-  isHide.value = false;
+const openAuthDialog = async (roleId:number) => {
+  //拿到角色已有的权限
+  const roleIds = await getPermissionOfrole(roleId);
+  console.log("这个角色有的权限：",roleIds);
 
+
+  allPermission.value = await getAllPermission()
+  console.log("权限有：{}",allPermission.value);
+  isHide.value = false;
+  addChecked(allPermission.value)
 }
+
+const addChecked = (treeData:Permission[]) =>{
+  treeData.forEach(p=>{
+    p.checked = false;
+    if(p.children && p.children.length>0){
+      addChecked(p.children)
+    }
+  })
+}
+
 const closeAuthDialog = () => {
   isHide.value = true;
 }
@@ -42,6 +72,9 @@ const closeAuthDialog = () => {
       <span class="rbac-modal-close" id="closeModal" @click="closeAuthDialog">&times;</span>
       <div style="padding: 20px; height: 100%; box-sizing: border-box;">
         <h2>角色授权</h2>
+        <Mymenu v-for="menu in allPermission"
+                :key="menu.id"
+        :item="menu"></Mymenu>
       </div>
     </div>
   </div>
