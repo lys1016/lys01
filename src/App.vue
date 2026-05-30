@@ -26,15 +26,29 @@ onMounted(async () => {
 
 // 打开遮罩层
 const openAuthDialog = async (roleId:number) => {
-  //拿到角色已有的权限
-  const roleIds = await getPermissionOfrole(roleId);
-  console.log("这个角色有的权限：",roleIds);
-
+  //拿到角色已有的权限id
+  const rolepermissionIds = await getPermissionOfrole(roleId);
+  console.log("这个角色有的权限：",rolepermissionIds);
 
   allPermission.value = await getAllPermission()
   console.log("权限有：{}",allPermission.value);
   isHide.value = false;
+  //添加check属性
   addChecked(allPermission.value)
+  //实现勾选已有权限
+  checkPermission(allPermission.value,rolepermissionIds)
+}
+
+const   checkPermission=(allPermission:Permission[],rolepermissionIds:number[])=>{
+     allPermission.forEach(item=>{
+       if (rolepermissionIds.includes(item.id)){
+         item.checked = true;
+       }
+       if (item.children && item.children.length>0){
+         checkPermission(item.children,rolepermissionIds)
+       }
+
+     })
 }
 
 const addChecked = (treeData:Permission[]) =>{

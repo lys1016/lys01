@@ -22,7 +22,7 @@ const menutype2chinese = computed(()=>{
 
 <template>
 <div>
-  <input type="checkbox">
+  <input type="checkbox" :checked="prop.item.checked">
   <span>{{item.name}}</span>
   <span class="menuType">{{menutype2chinese}}</span>
   <div v-if="item.children && item.children.length>0" class="subitem">
